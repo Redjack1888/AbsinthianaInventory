@@ -4,6 +4,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.media.Image;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +66,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
         TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
         TextView priceTextView = (TextView) view.findViewById(R.id.price);
         ImageView productPic = (ImageView) view.findViewById(R.id.image);
-        ImageButton sale = (ImageButton) view.findViewById(R.id.sale);
+        ImageView sale = (ImageView) view.findViewById(R.id.sale);
 
         final int itemStockId = cursor.getInt(cursor.getColumnIndex(ItemEntry._ID));
 

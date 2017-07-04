@@ -49,6 +49,8 @@ public class CatalogActivity extends AppCompatActivity implements
             }
         });
 
+
+
         // Find the ListView which will be populated with the item data
         ListView inventoryListView = (ListView) findViewById(R.id.list_view);
 
@@ -60,6 +62,27 @@ public class CatalogActivity extends AppCompatActivity implements
         // There is no item data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new InventoryCursorAdapter(this, null);
         inventoryListView.setAdapter(mCursorAdapter);
+
+//        // Setup an setOnScrollListener on ListView so to be able to hide the FAB action button
+//        // when overlap on an item view
+//        inventoryListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//
+//            }
+//
+//            @Override
+//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//
+//                int lastItem = firstVisibleItem + visibleItemCount;
+//                if (lastItem < totalItemCount) {
+//
+//                    fab.setVisibility(View.VISIBLE);
+//                }else {
+//                    fab.setVisibility(View.INVISIBLE);
+//                }
+//            }
+//        });
 
         // Setup the item click listener
         inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
