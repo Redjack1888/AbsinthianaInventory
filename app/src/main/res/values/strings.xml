@@ -1,0 +1,130 @@
+<resources>
+    <string name="app_name">Absinthiana</string>
+
+    <!-- Label for overflow menu option that inserts fake item data into the app [CHAR LIMIT=20] -->
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+
+    <!-- Label for overflow menu option that deletes all item data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Items</string>
+
+    <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
+    <string name="empty_view_title_text">It\'s a bit lonely here…</string>
+
+    <!-- Subtitle text for the empty view that prompts the user to add a item [CHAR LIMIT=50] -->
+    <string name="empty_view_subtitle_text">Start adding some items to your inventory</string>
+
+    <!-- Title for the activity to add a new item [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_new_item">Add a Item</string>
+
+    <!-- Title for the activity to edit an existing item [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_edit_item">Edit Item</string>
+
+    <!-- Label for editor menu option to save item and leave editor [CHAR LIMIT=20] -->
+    <string name="action_save">Save</string>
+
+    <!-- Label for editor overflow menu option that deletes the current item [CHAR LIMIT=20] -->
+    <string name="action_delete">Delete</string>
+
+    <!-- Toast message in editor when new item has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_item_successful">Item saved</string>
+
+    <!-- Toast message in editor when new item has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_item_failed">Error with saving item</string>
+
+    <!-- Toast message in editor when current item was successfully updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_item_successful">Item updated</string>
+
+    <!-- Toast message in editor when current item has failed to be updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_item_failed">Error with updating item</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing the current item [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
+
+    <!-- Toast message in editor when current item was successfully deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_item_successful">Item deleted</string>
+
+    <!-- Toast message in editor when current item has failed to be deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_item_failed">Error with deleting item</string>
+
+    <!-- Dialog message to ask the user to confirm deleting the current item [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this item?</string>
+
+    <!-- Dialog button text for the option to confirm deleting the current item [CHAR LIMIT=20] -->
+    <string name="delete">Delete</string>
+
+    <!-- Dialog button text for the option to cancel deletion of the current item [CHAR LIMIT=20] -->
+    <string name="cancel">Cancel</string>
+
+    <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
+    <string name="category_overview">Product Name</string>
+
+    <string name="category_description">Description</string>
+
+    <!-- Label for category information in the editor [CHAR LIMIT=30] -->
+    <string name="category_label">Category</string>
+
+    <!-- Label for measurement information in the editor [CHAR LIMIT=30] -->
+    <string name="category_price">Price</string>
+
+    <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_item_name">Name</string>
+
+    <!-- Text hint for breed field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_item_breed">Description</string>
+
+    <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_item_price">Price</string>
+
+    <!-- Units for weight of the item (kilograms) [CHAR LIMIT=5] -->
+    <string name="unit_item_price">€</string>
+
+    <!-- Label for dropdown menu option if the item's category is unknown [CHAR LIMIT=20] -->
+    <string name="category_unknown">Unknown</string>
+
+    <!-- Label for dropdown menu option if the item is glasses [CHAR LIMIT=20] -->
+    <string name="category_glasses">Glasses</string>
+
+    <!-- Label for dropdown menu option if the item is spoons [CHAR LIMIT=20] -->
+    <string name="category_spoons">Spoons</string>
+
+    <!-- Label for dropdown menu option if the item is fountains [CHAR LIMIT=20] -->
+    <string name="category_fountains">Fountains</string>
+
+    <!-- Label for dropdown menu option if the item is pipes [CHAR LIMIT=20] -->
+    <string name="category_pipes">Pipes</string>
+
+    <!-- Label for dropdown menu option if the item is carafes [CHAR LIMIT=20] -->
+    <string name="category_carafes">Carafes</string>
+
+    <!-- Label for dropdown menu option if the item is brouilleurs [CHAR LIMIT=20] -->
+    <string name="category_brouilleurs">Brouilleurs</string>
+
+    <!-- Label for dropdown menu option if the item is accessories set [CHAR LIMIT=20] -->
+    <string name="category_accessories_set">Accessories Set</string>
+
+    <!-- Label for dropdown menu option if the item is other accessories [CHAR LIMIT=20] -->
+    <string name="category_other_accessories">Other Accessories</string>
+
+    <!-- Label for the item's breed if the breed is unknown [CHAR LIMIT=20] -->
+    <string name="description_emptry">No Description Available</string>
+
+    <!-- Label for overflow menu option that inserts fake pet data into the app [CHAR LIMIT=20] -->
+    <string name="action_add_dummy_data">Add Dummy Data</string>
+
+    <string name="menu_order_item">Order more</string>
+    <string name="menu_delete_item">Delete item</string>
+    <string name="menu_delete_all_data">Delete all data</string>
+
+    <string name="decrement">Sale</string>
+    <string name="dummy_item_name">Dummy Item</string>
+    <string name="dummy_item_description">Dummy Item description</string>
+    <string name="dummy_supplier_name">Dummy Supplier Name</string>
+    <string name="dummy_supplier_phone">00393480477153</string>
+    <string name="dummy_supplier_email">alessandro.mana@gmail.com</string>
+</resources>

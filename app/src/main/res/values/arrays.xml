@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- These are the options displayed in the gender drop-down Spinner -->
+    <string-array name="array_category_options">
+        <item>@string/category_unknown</item>
+        <item>@string/category_glasses</item>
+        <item>@string/category_spoons</item>
+        <item>@string/category_fountains</item>
+        <item>@string/category_pipes</item>
+        <item>@string/category_carafes</item>
+        <item>@string/category_brouilleurs</item>
+        <item>@string/category_accessories_set</item>
+        <item>@string/category_other_accessories</item>
+
+    </string-array>
+</resources>
