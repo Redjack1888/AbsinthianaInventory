@@ -110,12 +110,6 @@ public class CatalogActivity extends AppCompatActivity implements
         getLoaderManager().initLoader(ITEM_LOADER, null, this);
     }
 
-//    public void clickOnViewItem(long id) {
-//        Intent intent = new Intent(this, DetailsActivity.class);
-//        intent.putExtra("itemId", id);
-//        startActivity(intent);
-//    }
-
     /**
      * Helper method to insert hardcoded item data into the database. For debugging purposes only.
      */

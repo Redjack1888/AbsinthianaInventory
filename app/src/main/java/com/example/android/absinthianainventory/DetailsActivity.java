@@ -351,12 +351,12 @@ public class DetailsActivity extends AppCompatActivity implements
         String supplierNameString = mSupplierNameEdit.getText().toString().trim();
         String supplierPhoneString = mSupplierPhoneEdit.getText().toString().trim();
         String supplierEmailString = mSupplierEmailEdit.getText().toString().trim();
-        String ProductPic = imageView.toString();
+        String productPic = actualUri.toString();
 
 
         // Check if this is supposed to be a new item
         // and check if all the fields in the editor are blank
-        if (mCurrentItemUri == null &&
+        if (mCurrentItemUri == null && TextUtils.isEmpty(productPic) &&
                 TextUtils.isEmpty(nameString) && TextUtils.isEmpty(descriptionString) &&
                 TextUtils.isEmpty(priceString) && TextUtils.isEmpty(quantityString) && TextUtils.isEmpty(supplierNameString) && TextUtils.isEmpty(supplierPhoneString) && TextUtils.isEmpty(supplierEmailString) && mCategory == ItemEntry.CATEGORY_UNKNOWN) {
             // Since no fields were modified, we can return early without creating a new item.
@@ -387,7 +387,11 @@ public class DetailsActivity extends AppCompatActivity implements
         values.put(ItemEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
         values.put(ItemEntry.COLUMN_SUPPLIER_PHONE, supplierPhoneString);
         values.put(ItemEntry.COLUMN_SUPPLIER_EMAIL, supplierEmailString);
-        values.put(ItemEntry.COLUMN_ITEM_IMAGE, ProductPic);
+        if(actualUri !=null){
+            values.put(ItemEntry.COLUMN_ITEM_IMAGE, productPic);
+        }else{
+            return;
+        }
 
         // Determine if this is a new or existing item by checking if mCurrentItemUri is null or not
         if (mCurrentItemUri == null) {
@@ -576,6 +580,8 @@ public class DetailsActivity extends AppCompatActivity implements
             String supplier_email = cursor.getString(supplierEmailColumnIndex);
             String product_image = cursor.getString(imageColumnIndex);
 
+
+
             // Update the views on the screen with the values from the database
             mNameEditText.setText(name);
             mDescriptionEditText.setText(description);
@@ -584,7 +590,7 @@ public class DetailsActivity extends AppCompatActivity implements
             mSupplierNameEdit.setText(supplier_name);
             mSupplierPhoneEdit.setText(supplier_phone);
             mSupplierEmailEdit.setText(supplier_email);
-            imageView.setImageResource(Integer.parseInt(product_image));
+            imageView.setImageURI(Uri.parse(product_image));
 
             // Gender is a dropdown spinner, so map the constant value from the database
             // into one of the dropdown options (0 is Unknown, 1 is Male, 2 is Female).

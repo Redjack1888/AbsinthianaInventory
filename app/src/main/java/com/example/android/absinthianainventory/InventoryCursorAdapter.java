@@ -4,13 +4,11 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.media.Image;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,7 +85,9 @@ public class InventoryCursorAdapter extends CursorAdapter {
         quantityTextView.setText(String.valueOf(itemQuantity));
         priceTextView.setText(itemPrice);
 
-        productPic.setImageURI(Uri.parse(cursor.getString(cursor.getColumnIndex(ItemEntry.COLUMN_ITEM_IMAGE))));
+
+
+        productPic.setImageURI(Uri.parse(image));
 
         // setOnClickListener on Sale Button
         sale.setOnClickListener(new View.OnClickListener() {
