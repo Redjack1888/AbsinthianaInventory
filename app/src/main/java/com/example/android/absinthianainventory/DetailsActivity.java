@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,10 +21,12 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,8 +38,14 @@ import android.widget.Toast;
 
 import com.example.android.absinthianainventory.data.InventoryContract.ItemEntry;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class DetailsActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final String LOG_TAG = DetailsActivity.class.getSimpleName();
 
     /** Identifier for the item data loader */
     private static final int EXISTING_ITEM_LOADER = 0;
@@ -43,6 +53,8 @@ public class DetailsActivity extends AppCompatActivity implements
     /** Identifier for the permission to read external storage */
     private static final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     private static final int PICK_IMAGE_REQUEST = 0;
+
+    private static final String STATE_URI = "STATE_URI";
 
     /** Content URI for the existing item (null if it's a new item) */
     private Uri mCurrentItemUri;
@@ -104,7 +116,7 @@ public class DetailsActivity extends AppCompatActivity implements
 
     Button imageBtn;
     ImageView imageView;
-    Uri actualUri;
+    Uri pictureUri;
 
     long mCurrentItemId;
 
@@ -205,6 +217,32 @@ public class DetailsActivity extends AppCompatActivity implements
 
         setupSpinner();
     }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (pictureUri != null)
+            outState.putString(STATE_URI, pictureUri.toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState.containsKey(STATE_URI) &&
+                !savedInstanceState.getString(STATE_URI).equals("")) {
+            pictureUri = Uri.parse(savedInstanceState.getString(STATE_URI));
+
+            ViewTreeObserver viewTreeObserver = imageView.getViewTreeObserver();
+            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                   imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    imageView.setImageBitmap(getBitmapFromUri(pictureUri));
+                }
+            });
+        }
+    }
 
     /**
      * Setup the dropdown spinner that allows the user to select the category of the item.
@@ -257,6 +295,9 @@ public class DetailsActivity extends AppCompatActivity implements
         });
     }
 
+    /**
+     * Method to decrease by one the quantity
+     */
     private void subtractOneToQuantity() {
         String previousValueString = mQuantityEdit.getText().toString();
         int previousValue;
@@ -270,17 +311,18 @@ public class DetailsActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Method to increase by one the quantity
+     */
     private void sumOneToQuantity() {
         String previousValueString = mQuantityEdit.getText().toString();
-        int previousValue;
-        if (previousValueString.isEmpty()) {
-            previousValue = 0;
-        } else {
-            previousValue = Integer.parseInt(previousValueString);
-        }
-        mQuantityEdit.setText(String.valueOf(previousValue + 1));
-    }
+        int previousValue = Integer.parseInt(previousValueString);
+            mQuantityEdit.setText(String.valueOf(previousValue + 1));
 
+    }
+    /**
+     * Method to open Image Selector - Permissions Requirements
+     */
     public void tryToOpenImageSelector() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -293,6 +335,9 @@ public class DetailsActivity extends AppCompatActivity implements
         openImageSelector();
     }
 
+    /**
+     * Method to open Image Selector - Intent
+     */
     private void openImageSelector() {
         Intent intent;
         if (Build.VERSION.SDK_INT < 19) {
@@ -319,6 +364,7 @@ public class DetailsActivity extends AppCompatActivity implements
             }
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         // The ACTION_OPEN_DOCUMENT intent was sent with the request code READ_REQUEST_CODE.
@@ -330,10 +376,65 @@ public class DetailsActivity extends AppCompatActivity implements
             // Instead, a URI to that document will be contained in the return intent
             // provided to this method as a parameter.  Pull that uri using "resultData.getData()"
 
+            // This part of the code was
             if (resultData != null) {
-                actualUri = resultData.getData();
-                imageView.setImageURI(actualUri);
+                pictureUri = resultData.getData();
+                Log.i(LOG_TAG, "Uri: " + pictureUri.toString());
+                imageView.setImageBitmap(getBitmapFromUri(pictureUri));
                 imageView.invalidate();
+            }
+        }
+    }
+
+    /**
+     * Method to take the Bitmap from the picture Uri
+     */
+    public Bitmap getBitmapFromUri(Uri uri) {
+
+        if (uri == null || uri.toString().isEmpty())
+            return null;
+
+        // Get the dimensions of the View
+        int targetW = imageView.getWidth();
+        int targetH = imageView.getHeight();
+
+        InputStream input = null;
+        try {
+            input = this.getContentResolver().openInputStream(uri);
+
+            // Get the dimensions of the bitmap
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(input, null, bmOptions);
+            input.close();
+
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+
+            input = this.getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(input, null, bmOptions);
+            input.close();
+            return bitmap;
+
+        } catch (FileNotFoundException fne) {
+            Log.e(LOG_TAG, "Failed to load image.", fne);
+            return null;
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Failed to load image.", e);
+            return null;
+        } finally {
+            try {
+                input.close();
+            } catch (IOException ioe) {
+
             }
         }
     }
@@ -351,8 +452,7 @@ public class DetailsActivity extends AppCompatActivity implements
         String supplierNameString = mSupplierNameEdit.getText().toString().trim();
         String supplierPhoneString = mSupplierPhoneEdit.getText().toString().trim();
         String supplierEmailString = mSupplierEmailEdit.getText().toString().trim();
-        String productPic = actualUri.toString();
-
+        String productPic = pictureUri.toString();
 
         // Check if this is supposed to be a new item
         // and check if all the fields in the editor are blank
@@ -387,7 +487,7 @@ public class DetailsActivity extends AppCompatActivity implements
         values.put(ItemEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
         values.put(ItemEntry.COLUMN_SUPPLIER_PHONE, supplierPhoneString);
         values.put(ItemEntry.COLUMN_SUPPLIER_EMAIL, supplierEmailString);
-        if(actualUri !=null){
+        if(pictureUri !=null){
             values.put(ItemEntry.COLUMN_ITEM_IMAGE, productPic);
         }else{
             return;

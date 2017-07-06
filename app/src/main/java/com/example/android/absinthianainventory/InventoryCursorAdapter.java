@@ -85,8 +85,6 @@ public class InventoryCursorAdapter extends CursorAdapter {
         quantityTextView.setText(String.valueOf(itemQuantity));
         priceTextView.setText(itemPrice);
 
-
-
         productPic.setImageURI(Uri.parse(image));
 
         // setOnClickListener on Sale Button
@@ -96,13 +94,6 @@ public class InventoryCursorAdapter extends CursorAdapter {
                 oneSale(itemStockId, itemQuantity, context);
             }
         });
-
-//        view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
 
     }
 
@@ -122,6 +113,5 @@ public class InventoryCursorAdapter extends CursorAdapter {
 
         }
     }
-
 
 }
