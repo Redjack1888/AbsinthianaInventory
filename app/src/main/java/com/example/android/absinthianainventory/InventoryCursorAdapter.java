@@ -85,7 +85,8 @@ public class InventoryCursorAdapter extends CursorAdapter {
         quantityTextView.setText(String.valueOf(itemQuantity));
         priceTextView.setText(itemPrice);
 
-        productPic.setImageURI(Uri.parse(image));
+        Uri imageUri = Uri.parse(image);
+        productPic.setImageURI(imageUri);
 
         // setOnClickListener on Sale Button
         sale.setOnClickListener(new View.OnClickListener() {

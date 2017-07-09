@@ -11,7 +11,16 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/action_order"
+        android:title="@string/menu_order_item"
+        android:icon="@drawable/ic_store"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_delete"
         android:title="@string/action_delete"
         app:showAsAction="never" />
+
+
+
 </menu>

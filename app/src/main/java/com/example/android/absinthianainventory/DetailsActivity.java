@@ -12,7 +12,6 @@ import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,7 +25,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,25 +36,27 @@ import android.widget.Toast;
 
 import com.example.android.absinthianainventory.data.InventoryContract.ItemEntry;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
 public class DetailsActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = DetailsActivity.class.getSimpleName();
 
-    /** Identifier for the item data loader */
+    /**
+     * Identifier for the item data loader
+     */
     private static final int EXISTING_ITEM_LOADER = 0;
 
-    /** Identifier for the permission to read external storage */
+    /**
+     * Identifier for the permission to read external storage
+     */
     private static final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     private static final int PICK_IMAGE_REQUEST = 0;
 
     private static final String STATE_URI = "STATE_URI";
 
-    /** Content URI for the existing item (null if it's a new item) */
+    /**
+     * Content URI for the existing item (null if it's a new item)
+     */
     private Uri mCurrentItemUri;
 
     /**
@@ -108,7 +108,9 @@ public class DetailsActivity extends AppCompatActivity implements
      */
     private int mCategory = ItemEntry.CATEGORY_UNKNOWN;
 
-    /** Boolean flag that keeps track of whether the item has been edited (true) or not (false) */
+    /**
+     * Boolean flag that keeps track of whether the item has been edited (true) or not (false)
+     */
     private boolean mItemHasChanged = false;
 
     ImageButton decreaseQuantity;
@@ -117,6 +119,7 @@ public class DetailsActivity extends AppCompatActivity implements
     Button imageBtn;
     ImageView imageView;
     Uri pictureUri;
+    Bitmap bitmap;
 
     long mCurrentItemId;
 
@@ -167,7 +170,7 @@ public class DetailsActivity extends AppCompatActivity implements
         mNameEditText = (EditText) findViewById(R.id.edit_item_name);
         mDescriptionEditText = (EditText) findViewById(R.id.edit_item_description);
         mPriceEditText = (EditText) findViewById(R.id.edit_item_price);
-        mCategorySpinner = (Spinner) findViewById(R.id.spinner_gender);
+        mCategorySpinner = (Spinner) findViewById(R.id.spinner_category);
         mQuantityEdit = (EditText) findViewById(R.id.quantity_edit);
         mSupplierNameEdit = (EditText) findViewById(R.id.supplier_name_edit);
         mSupplierPhoneEdit = (EditText) findViewById(R.id.supplier_phone_edit);
@@ -178,6 +181,8 @@ public class DetailsActivity extends AppCompatActivity implements
 
         imageBtn = (Button) findViewById(R.id.select_image);
         imageView = (ImageView) findViewById(R.id.image_view_holder);
+
+        imageView.setImageURI(pictureUri);
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
@@ -217,32 +222,32 @@ public class DetailsActivity extends AppCompatActivity implements
 
         setupSpinner();
     }
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        if (pictureUri != null)
-            outState.putString(STATE_URI, pictureUri.toString());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        if (savedInstanceState.containsKey(STATE_URI) &&
-                !savedInstanceState.getString(STATE_URI).equals("")) {
-            pictureUri = Uri.parse(savedInstanceState.getString(STATE_URI));
-
-            ViewTreeObserver viewTreeObserver = imageView.getViewTreeObserver();
-            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                   imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    imageView.setImageBitmap(getBitmapFromUri(pictureUri));
-                }
-            });
-        }
-    }
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//
+//        if (pictureUri != null)
+//            outState.putString(STATE_URI, pictureUri.toString());
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//
+//        if (savedInstanceState.containsKey(STATE_URI) &&
+//                !savedInstanceState.getString(STATE_URI).equals("")) {
+//            pictureUri = Uri.parse(savedInstanceState.getString(STATE_URI));
+//
+//            ViewTreeObserver viewTreeObserver = imageView.getViewTreeObserver();
+//            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                @Override
+//                public void onGlobalLayout() {
+//                   imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                    imageView.setImageBitmap(getBitmapFromUri(pictureUri));
+//                }
+//            });
+//        }
+//    }
 
     /**
      * Setup the dropdown spinner that allows the user to select the category of the item.
@@ -316,10 +321,15 @@ public class DetailsActivity extends AppCompatActivity implements
      */
     private void sumOneToQuantity() {
         String previousValueString = mQuantityEdit.getText().toString();
-        int previousValue = Integer.parseInt(previousValueString);
-            mQuantityEdit.setText(String.valueOf(previousValue + 1));
-
+        int previousValue;
+        if (previousValueString.isEmpty()) {
+            previousValue = 0;
+        } else {
+            previousValue = Integer.parseInt(previousValueString);
+        }
+        mQuantityEdit.setText(String.valueOf(previousValue + 1));
     }
+
     /**
      * Method to open Image Selector - Permissions Requirements
      */
@@ -380,69 +390,104 @@ public class DetailsActivity extends AppCompatActivity implements
             if (resultData != null) {
                 pictureUri = resultData.getData();
                 Log.i(LOG_TAG, "Uri: " + pictureUri.toString());
-                imageView.setImageBitmap(getBitmapFromUri(pictureUri));
-                imageView.invalidate();
+//                imageView.setImageBitmap(getBitmapFromUri(pictureUri));
+                imageView.setImageURI(pictureUri);
+//                imageView.invalidate();
             }
         }
     }
 
+//    /**
+//     * Method to take the Bitmap from the picture Uri
+//     */
+//    public Bitmap getBitmapFromUri(Uri uri) {
+//
+//        if (uri == null || uri.toString().isEmpty())
+//            return null;
+//
+//        // Get the dimensions of the View
+//        int targetW = imageView.getWidth();
+//        int targetH = imageView.getHeight();
+//
+//        InputStream input = null;
+//        try {
+//            input = this.getContentResolver().openInputStream(pictureUri);
+//
+//            // Get the dimensions of the bitmap
+//            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+//            bmOptions.inJustDecodeBounds = true;
+//            BitmapFactory.decodeStream(input, null, bmOptions);
+//            input.close();
+//
+//            int photoW = bmOptions.outWidth;
+//            int photoH = bmOptions.outHeight;
+//
+//            // Determine how much to scale down the image
+//            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+//
+//            // Decode the image file into a Bitmap sized to fill the View
+//            bmOptions.inJustDecodeBounds = false;
+//            bmOptions.inSampleSize = scaleFactor;
+//            bmOptions.inPurgeable = true;
+//
+//            input = this.getContentResolver().openInputStream(pictureUri);
+//            Bitmap bitmap = BitmapFactory.decodeStream(input, null, bmOptions);
+//            input.close();
+//            return bitmap;
+//
+//        } catch (FileNotFoundException fne) {
+//            Log.e(LOG_TAG, "Failed to load image.", fne);
+//            return null;
+//        } catch (Exception e) {
+//            Log.e(LOG_TAG, "Failed to load image.", e);
+//            return null;
+//        } finally {
+//            try {
+//                input.close();
+//            } catch (IOException ioe) {
+//
+//            }
+//        }
+//    }
+
     /**
-     * Method to take the Bitmap from the picture Uri
+     * Verify input from editor before to save item into database.     *
      */
-    public Bitmap getBitmapFromUri(Uri uri) {
-
-        if (uri == null || uri.toString().isEmpty())
-            return null;
-
-        // Get the dimensions of the View
-        int targetW = imageView.getWidth();
-        int targetH = imageView.getHeight();
-
-        InputStream input = null;
-        try {
-            input = this.getContentResolver().openInputStream(uri);
-
-            // Get the dimensions of the bitmap
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(input, null, bmOptions);
-            input.close();
-
-            int photoW = bmOptions.outWidth;
-            int photoH = bmOptions.outHeight;
-
-            // Determine how much to scale down the image
-            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-
-            // Decode the image file into a Bitmap sized to fill the View
-            bmOptions.inJustDecodeBounds = false;
-            bmOptions.inSampleSize = scaleFactor;
-            bmOptions.inPurgeable = true;
-
-            input = this.getContentResolver().openInputStream(uri);
-            Bitmap bitmap = BitmapFactory.decodeStream(input, null, bmOptions);
-            input.close();
-            return bitmap;
-
-        } catch (FileNotFoundException fne) {
-            Log.e(LOG_TAG, "Failed to load image.", fne);
-            return null;
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Failed to load image.", e);
-            return null;
-        } finally {
-            try {
-                input.close();
-            } catch (IOException ioe) {
-
-            }
+    private boolean addItem() {
+        boolean isAllOk = true;
+        if (!checkTheValues(mNameEditText, "name")) {
+            isAllOk = false;
         }
+        if (!checkTheValues(mDescriptionEditText, "description")) {
+            isAllOk = false;
+        }
+        if (!checkTheValues(mPriceEditText, "price")) {
+            isAllOk = false;
+        }
+        if (!checkTheValues(mQuantityEdit, "quantity")) {
+            isAllOk = false;
+        }
+        if (!checkTheValues(mSupplierNameEdit, "supplier name")) {
+            isAllOk = false;
+        }
+        if (!checkTheValues(mSupplierPhoneEdit, "supplier phone")) {
+            isAllOk = false;
+        }
+        if (!checkTheValues(mSupplierEmailEdit, "supplier email")) {
+            isAllOk = false;
+        }
+
+        if (!isAllOk) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Get user input from editor and save item into database.
      */
     private void saveItem() {
+
         // Read from input fields
         // Use trim to eliminate leading or trailing white space
         String nameString = mNameEditText.getText().toString().trim();
@@ -452,11 +497,11 @@ public class DetailsActivity extends AppCompatActivity implements
         String supplierNameString = mSupplierNameEdit.getText().toString().trim();
         String supplierPhoneString = mSupplierPhoneEdit.getText().toString().trim();
         String supplierEmailString = mSupplierEmailEdit.getText().toString().trim();
-        String productPic = pictureUri.toString();
+//        String productPic = pictureUri.toString();
 
         // Check if this is supposed to be a new item
         // and check if all the fields in the editor are blank
-        if (mCurrentItemUri == null && TextUtils.isEmpty(productPic) &&
+        if (mCurrentItemUri == null && pictureUri == null &&
                 TextUtils.isEmpty(nameString) && TextUtils.isEmpty(descriptionString) &&
                 TextUtils.isEmpty(priceString) && TextUtils.isEmpty(quantityString) && TextUtils.isEmpty(supplierNameString) && TextUtils.isEmpty(supplierPhoneString) && TextUtils.isEmpty(supplierEmailString) && mCategory == ItemEntry.CATEGORY_UNKNOWN) {
             // Since no fields were modified, we can return early without creating a new item.
@@ -487,10 +532,12 @@ public class DetailsActivity extends AppCompatActivity implements
         values.put(ItemEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
         values.put(ItemEntry.COLUMN_SUPPLIER_PHONE, supplierPhoneString);
         values.put(ItemEntry.COLUMN_SUPPLIER_EMAIL, supplierEmailString);
-        if(pictureUri !=null){
-            values.put(ItemEntry.COLUMN_ITEM_IMAGE, productPic);
-        }else{
-            return;
+        if (pictureUri != null) {
+            values.put(ItemEntry.COLUMN_ITEM_IMAGE, pictureUri.toString());
+        } else {
+            // If the new content URI is null, then there could be an error with insertion.
+            pictureUri = Uri.parse("android.resource://com.example.android.absinthianainventory/" + R.drawable.blank);
+            values.put(ItemEntry.COLUMN_ITEM_IMAGE, pictureUri.toString());
         }
 
         // Determine if this is a new or existing item by checking if mCurrentItemUri is null or not
@@ -529,6 +576,20 @@ public class DetailsActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Put an error icon in the editor fields before to save item to Database.
+     * Some fields such as Category and Product Image are not verified because the code offer a basic logic alternative to both missing fields
+     */
+    private boolean checkTheValues(EditText text, String description) {
+        if (TextUtils.isEmpty(text.getText())) {
+            text.setError("Missing product " + description);
+            return false;
+        } else {
+            text.setError(null);
+            return true;
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_editor.xml file.
@@ -558,12 +619,15 @@ public class DetailsActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
-                // Save item to database
+                // save item in DB
+                if (!addItem()) {
+                    // saying to onOptionsItemSelected that user clicked button
+                    return true;
+                }
+                // save item in DB
                 saveItem();
-                // Exit activity
                 finish();
                 return true;
-            // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
                 // Pop up confirmation dialog for deletion
                 showDeleteConfirmationDialog();
@@ -591,6 +655,10 @@ public class DetailsActivity extends AppCompatActivity implements
 
                 // Show a dialog that notifies the user they have unsaved changes
                 showUnsavedChangesDialog(discardButtonClickListener);
+                return true;
+            case R.id.action_order:
+                // dialog with phone and email
+                orderConfirmation();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -678,8 +746,7 @@ public class DetailsActivity extends AppCompatActivity implements
             String supplier_name = cursor.getString(supplierNameColumnIndex);
             String supplier_phone = cursor.getString(supplierPhoneColumnIndex);
             String supplier_email = cursor.getString(supplierEmailColumnIndex);
-            String product_image = cursor.getString(imageColumnIndex);
-
+            String product_image = Uri.parse(cursor.getString(imageColumnIndex)).toString();
 
 
             // Update the views on the screen with the values from the database
@@ -692,8 +759,8 @@ public class DetailsActivity extends AppCompatActivity implements
             mSupplierEmailEdit.setText(supplier_email);
             imageView.setImageURI(Uri.parse(product_image));
 
-            // Gender is a dropdown spinner, so map the constant value from the database
-            // into one of the dropdown options (0 is Unknown, 1 is Male, 2 is Female).
+            // Category is a dropdown spinner, so map the constant value from the database
+            // into one of the dropdown options.
             // Then call setSelection() so that option is displayed on screen as the current selection.
             switch (category) {
                 case ItemEntry.CATEGORY_GLASSES:
@@ -796,6 +863,45 @@ public class DetailsActivity extends AppCompatActivity implements
         });
 
         // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /**
+     * Prompt the user to confirm that they want to delete this item.
+     */
+    private void orderConfirmation() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.order_message);
+        builder.setPositiveButton(R.string.phone, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // intent to phone
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + mSupplierPhoneEdit.getText().toString().trim()));
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton(R.string.email, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                int price = Integer.parseInt(mPriceEditText.getText().toString().trim());
+                String supplierProductPrice = String.valueOf(price*0.8).trim();
+                int quantityRequired = 100;
+                String totalPrice = String.valueOf(price*0.8*quantityRequired);
+                // intent to email
+                Intent email_intent = new Intent(android.content.Intent.ACTION_SENDTO);
+                email_intent.setType("text/plain");
+                email_intent.setData(Uri.parse("mailto:" + mSupplierEmailEdit.getText().toString().trim()));
+                email_intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "New order");
+                String bodyMessage = "Please send us as soon as possible the following product:\n\n" +
+                        mNameEditText.getText().toString().trim() +
+                        "\nQuantity required: " + quantityRequired + " pieces\n " +
+                        "Total Price: " + totalPrice + " ( 100 x " + supplierProductPrice + " )\n\n" +
+                        "Sure in your answer.\nBest Regards.";
+                email_intent.putExtra(android.content.Intent.EXTRA_TEXT, bodyMessage);
+                startActivity(Intent.createChooser(email_intent, "Send email..."));
+            }
+        });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

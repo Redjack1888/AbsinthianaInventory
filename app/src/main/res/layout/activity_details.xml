@@ -83,7 +83,7 @@
 
                         <!-- Gender drop-down spinner -->
                         <Spinner
-                            android:id="@+id/spinner_gender"
+                            android:id="@+id/spinner_category"
                             android:layout_width="wrap_content"
                             android:layout_height="48dp"
                             android:layout_marginEnd="16dp"
@@ -202,7 +202,7 @@
                             android:id="@+id/edit_item_description"
                             style="@style/EditorFieldStyle"
                             android:hint="@string/hint_item_breed"
-                            android:inputType="textCapWords" />
+                            android:inputType="textCapSentences" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -226,8 +226,9 @@
                             android:id="@+id/image_view_holder"
                             android:layout_width="wrap_content"
                             android:layout_height="120dp"
+                            android:adjustViewBounds="true"
                             android:layout_marginTop="16dp"
-                            android:src="@drawable/empty_database" />
+                            android:src="@drawable/blank" />
 
                         <Button
                             android:id="@+id/select_image"
@@ -282,7 +283,7 @@
                         android:id="@+id/supplier_name_edit"
                         style="@style/EditorFieldStyle"
                         android:hint="Supplier Name hint"
-                        android:inputType="text"
+                        android:inputType="textCapWords"
                         android:layout_marginTop="8dp"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/black" />

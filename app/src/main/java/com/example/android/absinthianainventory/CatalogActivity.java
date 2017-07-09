@@ -32,6 +32,9 @@ public class CatalogActivity extends AppCompatActivity implements
     /** Adapter for the ListView */
     InventoryCursorAdapter mCursorAdapter;
 
+    /** String with the Uri of the demo image for the Dummy Data */
+    String demo;
+
     int lastVisibleItem = 0;
 
     @Override
@@ -48,6 +51,8 @@ public class CatalogActivity extends AppCompatActivity implements
                 startActivity(intent);
             }
         });
+
+        demo =  Uri.parse("android.resource://com.example.android.absinthianainventory/" + R.drawable.blank).toString();
 
 
 
@@ -125,7 +130,7 @@ public class CatalogActivity extends AppCompatActivity implements
         values.put(ItemEntry.COLUMN_SUPPLIER_NAME, getString(R.string.dummy_supplier_name));
         values.put(ItemEntry.COLUMN_SUPPLIER_PHONE, getString(R.string.dummy_supplier_phone));
         values.put(ItemEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.dummy_supplier_email));
-        values.put(ItemEntry.COLUMN_ITEM_IMAGE, "");
+        values.put(ItemEntry.COLUMN_ITEM_IMAGE, demo);
 
         // Insert a new row for Dummy Item into the provider using the ContentResolver.
         // Use the {@link ItemEntry#CONTENT_URI} to indicate that we want to insert

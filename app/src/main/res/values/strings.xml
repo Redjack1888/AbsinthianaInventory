@@ -127,4 +127,8 @@
     <string name="dummy_supplier_name">Dummy Supplier Name</string>
     <string name="dummy_supplier_phone">00393480477153</string>
     <string name="dummy_supplier_email">alessandro.mana@gmail.com</string>
+
+    <string name="order_message">You can place an order for this item by phone or e-mail</string>
+    <string name="phone">Phone</string>
+    <string name="email">E-mail</string>
 </resources>
