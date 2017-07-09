@@ -8,7 +8,7 @@
     <string name="action_delete_all_entries">Delete All Items</string>
 
     <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
-    <string name="empty_view_title_text">It\'s a bit lonely here…</string>
+    <string name="empty_view_title_text">It\'s a bit empty here…</string>
 
     <!-- Subtitle text for the empty view that prompts the user to add a item [CHAR LIMIT=50] -->
     <string name="empty_view_subtitle_text">Start adding some items to your inventory</string>
