@@ -622,6 +622,11 @@ public class DetailsActivity extends AppCompatActivity implements
             MenuItem menuItem = menu.findItem(R.id.action_delete);
             menuItem.setVisible(false);
         }
+        // If this is a new item, hide the "Order" menu item.
+        if (mCurrentItemUri == null) {
+            MenuItem menuItem = menu.findItem(R.id.action_order);
+            menuItem.setVisible(false);
+        }
         return true;
     }
 
@@ -897,9 +902,10 @@ public class DetailsActivity extends AppCompatActivity implements
             public void onClick(DialogInterface dialog, int id) {
 
                 int price = Integer.parseInt(mPriceEditText.getText().toString().trim());
-                String supplierProductPrice = String.valueOf(price*0.8).trim();
                 int quantityRequired = 100;
-                String totalPrice = String.valueOf(price*0.8*quantityRequired);
+                int totalPrice = price*quantityRequired;
+                String supplierProductPrice = String.valueOf(price);
+                String totalPriceString = String.valueOf(totalPrice);
                 // intent to email
                 Intent email_intent = new Intent(android.content.Intent.ACTION_SENDTO);
                 email_intent.setType("text/plain");
@@ -907,8 +913,8 @@ public class DetailsActivity extends AppCompatActivity implements
                 email_intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "New order");
                 String bodyMessage = "Please send us as soon as possible the following product:\n\n" +
                         mNameEditText.getText().toString().trim() +
-                        "\nQuantity required: " + quantityRequired + " pieces\n " +
-                        "Total Price: " + totalPrice + " ( 100 x " + supplierProductPrice + " )\n\n" +
+                        "\nQuantity required: " + quantityRequired + " pieces\n" +
+                        "Total Price: " + totalPriceString + "€" + " ( "+ quantityRequired + " x " + supplierProductPrice + "€)\n\n" +
                         "Sure in your answer.\nBest Regards.";
                 email_intent.putExtra(android.content.Intent.EXTRA_TEXT, bodyMessage);
                 startActivity(Intent.createChooser(email_intent, "Send email..."));
