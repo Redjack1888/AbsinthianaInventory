@@ -149,6 +149,7 @@ public class CatalogActivity extends AppCompatActivity implements
     private void deleteAllItems() {
         int rowsDeleted = getContentResolver().delete(ItemEntry.CONTENT_URI, null, null);
         Log.v("CatalogActivity", rowsDeleted + " rows deleted from item database");
+        lastItemVisible=0;
     }
 
     @Override
