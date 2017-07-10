@@ -113,13 +113,19 @@ public class DetailsActivity extends AppCompatActivity implements
      */
     private boolean mItemHasChanged = false;
 
-    ImageButton decreaseQuantity;
-    ImageButton increaseQuantity;
+    private ImageButton decreaseQuantity;
+    private ImageButton increaseQuantity;
 
-    Button imageBtn;
-    ImageView imageView;
-    Uri pictureUri;
+    private Button imageBtn;
+    private ImageView imageView;
+    private Uri pictureUri;
+
     Bitmap bitmap;
+
+    String email;
+    String emailValidationPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    String phoneNumber;
+    String phoneNumberValidationPattern = "^[0-9-]+$";
 
     long mCurrentItemId;
 
@@ -476,6 +482,10 @@ public class DetailsActivity extends AppCompatActivity implements
         if (!checkTheValues(mSupplierEmailEdit, "supplier email")) {
             isAllOk = false;
         }
+        if (pictureUri == null && mCurrentItemUri == null) {
+            isAllOk = false;
+            imageBtn.setError("Missing image");
+        }
 
         if (!isAllOk) {
             return false;
@@ -534,11 +544,13 @@ public class DetailsActivity extends AppCompatActivity implements
         values.put(ItemEntry.COLUMN_SUPPLIER_EMAIL, supplierEmailString);
         if (pictureUri != null) {
             values.put(ItemEntry.COLUMN_ITEM_IMAGE, pictureUri.toString());
-        } else {
-            // If the new content URI is null, then there could be an error with insertion.
-            pictureUri = Uri.parse("android.resource://com.example.android.absinthianainventory/" + R.drawable.blank);
-            values.put(ItemEntry.COLUMN_ITEM_IMAGE, pictureUri.toString());
         }
+
+//        else {
+//            // If the new content URI is null, then there could be an error with insertion.
+//            pictureUri = Uri.parse("android.resource://com.example.android.absinthianainventory/" + R.drawable.blank);
+//            values.put(ItemEntry.COLUMN_ITEM_IMAGE, pictureUri.toString());
+//        }
 
         // Determine if this is a new or existing item by checking if mCurrentItemUri is null or not
         if (mCurrentItemUri == null) {
