@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -35,7 +36,10 @@ public class CatalogActivity extends AppCompatActivity implements
     /** String with the Uri of the demo image for the Dummy Data */
     String demo;
 
-    int lastVisibleItem = 0;
+    /** Integer to establish the last visible item on scroll view.
+     *  It's equal to 0 so that when ListView is empty the FAB is still visible
+     *  */
+    int lastItemVisible = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,26 +72,26 @@ public class CatalogActivity extends AppCompatActivity implements
         mCursorAdapter = new InventoryCursorAdapter(this, null);
         inventoryListView.setAdapter(mCursorAdapter);
 
-//        // Setup an setOnScrollListener on ListView so to be able to hide the FAB action button
-//        // when overlap on an item view
-//        inventoryListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//
-//                int lastItem = firstVisibleItem + visibleItemCount;
-//                if (lastItem < totalItemCount) {
-//
-//                    fab.setVisibility(View.VISIBLE);
-//                }else {
-//                    fab.setVisibility(View.INVISIBLE);
-//                }
-//            }
-//        });
+        // Setup an OnScrollListener to have the chance to hide FAB Button on list item scroll.
+        inventoryListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if(scrollState == 0) return;
+                //get the first item
+                final int currentFirstVisibleItem = view.getFirstVisiblePosition();
+                if (currentFirstVisibleItem > lastItemVisible) {
+                    fab.show();
+                } else if (currentFirstVisibleItem < lastItemVisible) {
+                    fab.hide();
+                }
+                lastItemVisible = currentFirstVisibleItem;
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
 
         // Setup the item click listener
         inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

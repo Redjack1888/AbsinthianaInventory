@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,7 +51,7 @@ public class DetailsActivity extends AppCompatActivity implements
     private static final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     private static final int PICK_IMAGE_REQUEST = 0;
 
-    private static final String STATE_URI = "STATE_URI";
+//    private static final String STATE_URI = "STATE_URI";
 
     /**
      * Content URI for the existing item (null if it's a new item)
@@ -113,21 +112,21 @@ public class DetailsActivity extends AppCompatActivity implements
      */
     private boolean mItemHasChanged = false;
 
-    private ImageButton decreaseQuantity;
-    private ImageButton increaseQuantity;
+    ImageButton decreaseQuantity;
+    ImageButton increaseQuantity;
 
     private Button imageBtn;
     private ImageView imageView;
     private Uri pictureUri;
 
-    Bitmap bitmap;
+//    Bitmap bitmap;
+//
+//    String email;
+//    String emailValidationPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+//    String phoneNumber;
+//    String phoneNumberValidationPattern = "^[0-9-]+$";
 
-    String email;
-    String emailValidationPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    String phoneNumber;
-    String phoneNumberValidationPattern = "^[0-9-]+$";
-
-    long mCurrentItemId;
+//    long mCurrentItemId;
 
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
