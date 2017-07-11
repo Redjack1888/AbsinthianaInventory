@@ -42,6 +42,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static android.R.attr.data;
+
 //import android.app.LoaderManager;
 //import android.content.CursorLoader;
 //import android.content.Loader;
@@ -59,10 +61,11 @@ public class DetailsActivity extends AppCompatActivity implements
     /**
      * Identifier for the permission to read external storage
      */
-    private static final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+    private static final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_MANAGE_DOCUMENTS = 1;
     private static final int PICK_IMAGE_REQUEST = 0;
 
     private static final String STATE_URI = "STATE_URI";
+//    private static final int PERMISSION_MANAGE_DOCUMENTS = 0;
 
     /**
      * Content URI for the existing item (null if it's a new item)
@@ -353,9 +356,14 @@ public class DetailsActivity extends AppCompatActivity implements
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.MANAGE_DOCUMENTS},
+                        PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_MANAGE_DOCUMENTS );
+            }
+
+
             return;
         }
 
@@ -374,7 +382,10 @@ public class DetailsActivity extends AppCompatActivity implements
         } else {
             intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+
         }
+
 
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
@@ -395,9 +406,20 @@ public class DetailsActivity extends AppCompatActivity implements
                 mUri = resultData.getData();
                 Log.i(LOG_TAG, "Uri: " + mUri.toString());
 
+//                /Activity.grantUriPermission(Activity.getPackageName(), mUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                final int takeFlags = resultData.getFlags()
+                        & (Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                // Check for the freshest data.
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    getContentResolver().takePersistableUriPermission(mUri, takeFlags);
+                }
 //                mTextView.setText(mUri.toString());
                 imageView.setImageBitmap(getBitmapFromUri(mUri));
             }
+
+
         }
     }
 
