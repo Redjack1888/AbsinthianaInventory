@@ -3,12 +3,12 @@ package com.example.android.absinthianainventory;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.LoaderManager;
+//import android.app.LoaderManager;
 import android.content.ContentValues;
-import android.content.CursorLoader;
+//import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.Loader;
+//import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -33,6 +33,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+
 
 import com.example.android.absinthianainventory.data.InventoryContract.ItemEntry;
 
@@ -169,7 +173,7 @@ public class DetailsActivity extends AppCompatActivity implements
 
             // Initialize a loader to read the item data from the database
             // and display the current values in the editor
-            getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
+            getSupportLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
         }
 
         // Find all relevant views that we will need to read user input from
