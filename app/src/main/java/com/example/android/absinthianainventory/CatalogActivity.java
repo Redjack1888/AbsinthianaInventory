@@ -1,15 +1,18 @@
 package com.example.android.absinthianainventory;
 
 //import android.app.LoaderManager;
+
 import android.content.ContentUris;
 import android.content.ContentValues;
-//import android.content.CursorLoader;
 import android.content.Intent;
-//import android.content.Loader;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -18,11 +21,11 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 
 import com.example.android.absinthianainventory.data.InventoryContract.ItemEntry;
+
+//import android.content.CursorLoader;
+//import android.content.Loader;
 
 /**
  * Displays list of items that were entered and stored in the app.
@@ -201,6 +204,7 @@ public class CatalogActivity extends AppCompatActivity implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Update {@link InventoryCursorAdapter} with this new cursor containing updated item data
         mCursorAdapter.swapCursor(data);
+        DatabaseUtils.dumpCursor(data);
     }
 
     @Override
