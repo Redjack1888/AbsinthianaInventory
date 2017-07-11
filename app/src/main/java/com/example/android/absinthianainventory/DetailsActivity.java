@@ -359,7 +359,7 @@ public class DetailsActivity extends AppCompatActivity implements
             return;
         }
 
-        
+
         openImageSelector();
     }
 
