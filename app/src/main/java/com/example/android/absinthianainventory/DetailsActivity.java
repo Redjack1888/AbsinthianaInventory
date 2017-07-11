@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -51,7 +52,7 @@ public class DetailsActivity extends AppCompatActivity implements
     private static final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     private static final int PICK_IMAGE_REQUEST = 0;
 
-//    private static final String STATE_URI = "STATE_URI";
+    private static final String STATE_URI = "STATE_URI";
 
     /**
      * Content URI for the existing item (null if it's a new item)
@@ -227,32 +228,32 @@ public class DetailsActivity extends AppCompatActivity implements
 
         setupSpinner();
     }
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//
-//        if (pictureUri != null)
-//            outState.putString(STATE_URI, pictureUri.toString());
-//    }
-//
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//
-//        if (savedInstanceState.containsKey(STATE_URI) &&
-//                !savedInstanceState.getString(STATE_URI).equals("")) {
-//            pictureUri = Uri.parse(savedInstanceState.getString(STATE_URI));
-//
-//            ViewTreeObserver viewTreeObserver = imageView.getViewTreeObserver();
-//            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//                @Override
-//                public void onGlobalLayout() {
-//                   imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                    imageView.setImageBitmap(getBitmapFromUri(pictureUri));
-//                }
-//            });
-//        }
-//    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (pictureUri != null)
+            outState.putString(STATE_URI, pictureUri.toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState.containsKey(STATE_URI) &&
+                !savedInstanceState.getString(STATE_URI).equals("")) {
+            pictureUri = Uri.parse(savedInstanceState.getString(STATE_URI));
+
+            ViewTreeObserver viewTreeObserver = imageView.getViewTreeObserver();
+            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                   imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    imageView.setImageURI(pictureUri);
+                }
+            });
+        }
+    }
 
     /**
      * Setup the dropdown spinner that allows the user to select the category of the item.

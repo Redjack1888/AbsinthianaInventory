@@ -1,11 +1,11 @@
 package com.example.android.absinthianainventory;
 
-import android.app.LoaderManager;
+//import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.CursorLoader;
+//import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
+//import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +18,9 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 
 import com.example.android.absinthianainventory.data.InventoryContract.ItemEntry;
 
@@ -58,8 +61,6 @@ public class CatalogActivity extends AppCompatActivity implements
 
         demo =  Uri.parse("android.resource://com.example.android.absinthianainventory/" + R.drawable.blank).toString();
 
-
-
         // Find the ListView which will be populated with the item data
         ListView inventoryListView = (ListView) findViewById(R.id.list_view);
 
@@ -80,9 +81,9 @@ public class CatalogActivity extends AppCompatActivity implements
                 //get the first item
                 final int currentFirstVisibleItem = view.getFirstVisiblePosition();
                 if (currentFirstVisibleItem > lastItemVisible) {
-                    fab.show();
-                } else if (currentFirstVisibleItem < lastItemVisible) {
                     fab.hide();
+                } else if (currentFirstVisibleItem < lastItemVisible) {
+                    fab.show();
                 }
                 lastItemVisible = currentFirstVisibleItem;
             }
@@ -116,7 +117,7 @@ public class CatalogActivity extends AppCompatActivity implements
         });
 
         // Kick off the loader
-        getLoaderManager().initLoader(ITEM_LOADER, null, this);
+        getSupportLoaderManager().initLoader(ITEM_LOADER, null, this);
     }
 
     /**
