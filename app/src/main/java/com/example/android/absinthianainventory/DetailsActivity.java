@@ -42,8 +42,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static android.R.attr.data;
-
 public class DetailsActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -406,6 +404,8 @@ public class DetailsActivity extends AppCompatActivity implements
 
     /**
      * Method to convert Uri to Bitmap
+     * by sudhirkhanger Forum Mentor
+     * https://github.com/crlsndrsjmnz/MyShareImageExample
      */
     public Bitmap getBitmapFromUri(Uri uri) {
 
