@@ -44,10 +44,6 @@ import java.io.InputStream;
 
 import static android.R.attr.data;
 
-//import android.app.LoaderManager;
-//import android.content.CursorLoader;
-//import android.content.Loader;
-
 public class DetailsActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -65,7 +61,6 @@ public class DetailsActivity extends AppCompatActivity implements
     private static final int PICK_IMAGE_REQUEST = 0;
 
     private static final String STATE_URI = "STATE_URI";
-//    private static final int PERMISSION_MANAGE_DOCUMENTS = 0;
 
     /**
      * Content URI for the existing item (null if it's a new item)
@@ -132,15 +127,6 @@ public class DetailsActivity extends AppCompatActivity implements
     private Button imageBtn;
     private ImageView imageView;
     private Uri mUri;
-
-//    Bitmap bitmap;
-//
-//    String email;
-//    String emailValidationPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-//    String phoneNumber;
-//    String phoneNumberValidationPattern = "^[0-9-]+$";
-
-//    long mCurrentItemId;
 
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
@@ -363,10 +349,8 @@ public class DetailsActivity extends AppCompatActivity implements
                         PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_MANAGE_DOCUMENTS );
             }
 
-
             return;
         }
-
 
         openImageSelector();
     }
@@ -385,7 +369,6 @@ public class DetailsActivity extends AppCompatActivity implements
             intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
 
         }
-
 
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
@@ -406,16 +389,14 @@ public class DetailsActivity extends AppCompatActivity implements
                 mUri = resultData.getData();
                 Log.i(LOG_TAG, "Uri: " + mUri.toString());
 
-//                /Activity.grantUriPermission(Activity.getPackageName(), mUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
                 final int takeFlags = resultData.getFlags()
                         & (Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                // Check for the freshest data.
 
+                // Check for the freshest data.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     getContentResolver().takePersistableUriPermission(mUri, takeFlags);
                 }
-//                mTextView.setText(mUri.toString());
+                // Set Image as Bitmap by Uri
                 imageView.setImageBitmap(getBitmapFromUri(mUri));
             }
 
@@ -423,6 +404,9 @@ public class DetailsActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Method to convert Uri to Bitmap
+     */
     public Bitmap getBitmapFromUri(Uri uri) {
 
         if (uri == null || uri.toString().isEmpty())
@@ -478,30 +462,30 @@ public class DetailsActivity extends AppCompatActivity implements
      */
     private boolean addItem() {
         boolean isAllOk = true;
-        if (!checkTheValues(mNameEditText, "name")) {
+        if (!checkTheValues(mNameEditText, getString(R.string.product_name))) {
             isAllOk = false;
         }
-        if (!checkTheValues(mDescriptionEditText, "description")) {
+        if (!checkTheValues(mDescriptionEditText, getString(R.string.product_description))) {
             isAllOk = false;
         }
-        if (!checkTheValues(mPriceEditText, "price")) {
+        if (!checkTheValues(mPriceEditText, getString(R.string.product_price))) {
             isAllOk = false;
         }
-        if (!checkTheValues(mQuantityEdit, "quantity")) {
+        if (!checkTheValues(mQuantityEdit, getString(R.string.product_quantity))) {
             isAllOk = false;
         }
-        if (!checkTheValues(mSupplierNameEdit, "supplier name")) {
+        if (!checkTheValues(mSupplierNameEdit, getString(R.string.supplier_name))) {
             isAllOk = false;
         }
-        if (!checkTheValues(mSupplierPhoneEdit, "supplier phone")) {
+        if (!checkTheValues(mSupplierPhoneEdit, getString(R.string.supplier_phone))) {
             isAllOk = false;
         }
-        if (!checkTheValues(mSupplierEmailEdit, "supplier email")) {
+        if (!checkTheValues(mSupplierEmailEdit, getString(R.string.supplier_email))) {
             isAllOk = false;
         }
         if (mUri == null && mCurrentItemUri == null) {
             isAllOk = false;
-            imageBtn.setError("Missing image");
+            imageBtn.setError(getString(R.string.missin_image_error));
         }
 
         if (!isAllOk) {
@@ -524,7 +508,6 @@ public class DetailsActivity extends AppCompatActivity implements
         String supplierNameString = mSupplierNameEdit.getText().toString().trim();
         String supplierPhoneString = mSupplierPhoneEdit.getText().toString().trim();
         String supplierEmailString = mSupplierEmailEdit.getText().toString().trim();
-//        String productPic = mUri.toString();
 
         // Check if this is supposed to be a new item
         // and check if all the fields in the editor are blank
@@ -562,12 +545,6 @@ public class DetailsActivity extends AppCompatActivity implements
         if (mUri != null) {
             values.put(ItemEntry.COLUMN_ITEM_IMAGE, mUri.toString());
         }
-
-//        else {
-//            // If the new content URI is null, then there could be an error with insertion.
-//            mUri = Uri.parse("android.resource://com.example.android.absinthianainventory/" + R.drawable.blank);
-//            values.put(ItemEntry.COLUMN_ITEM_IMAGE, mUri.toString());
-//        }
 
         // Determine if this is a new or existing item by checking if mCurrentItemUri is null or not
         if (mCurrentItemUri == null) {
@@ -611,7 +588,7 @@ public class DetailsActivity extends AppCompatActivity implements
      */
     private boolean checkTheValues(EditText text, String description) {
         if (TextUtils.isEmpty(text.getText())) {
-            text.setError("Missing product " + description);
+            text.setError(getString(R.string.product_error) + description);
             return false;
         } else {
             text.setError(null);
@@ -770,7 +747,6 @@ public class DetailsActivity extends AppCompatActivity implements
             int supplierEmailColumnIndex = cursor.getColumnIndex(ItemEntry.COLUMN_SUPPLIER_EMAIL);
             int imageColumnIndex = cursor.getColumnIndex(ItemEntry.COLUMN_ITEM_IMAGE);
 
-
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
             String description = cursor.getString(descriptionColumnIndex);
@@ -781,7 +757,6 @@ public class DetailsActivity extends AppCompatActivity implements
             String supplier_phone = cursor.getString(supplierPhoneColumnIndex);
             String supplier_email = cursor.getString(supplierEmailColumnIndex);
             String product_image = Uri.parse(cursor.getString(imageColumnIndex)).toString();
-
 
             // Update the views on the screen with the values from the database
             mNameEditText.setText(name);
@@ -927,14 +902,14 @@ public class DetailsActivity extends AppCompatActivity implements
                 Intent email_intent = new Intent(android.content.Intent.ACTION_SENDTO);
                 email_intent.setType("text/plain");
                 email_intent.setData(Uri.parse("mailto:" + mSupplierEmailEdit.getText().toString().trim()));
-                email_intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "New order");
-                String bodyMessage = "Please send us as soon as possible the following product:\n\n" +
+                email_intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.mail_subject));
+                String bodyMessage = getString(R.string.mail1) +
                         mNameEditText.getText().toString().trim() +
-                        "\nQuantity required: " + quantityRequired + " pieces\n" +
-                        "Total Price: " + totalPriceString + "€" + " ( "+ quantityRequired + " x " + supplierProductPrice + "€)\n\n" +
-                        "Sure in your answer.\nBest Regards.";
+                        getString(R.string.mail2) + quantityRequired + getString(R.string.mail3) +
+                        getString(R.string.mail4) + totalPriceString + getString(R.string.mail5) + quantityRequired + getString(R.string.mail7) + supplierProductPrice + getString(R.string.mail8) +
+                        getString(R.string.mail9);
                 email_intent.putExtra(android.content.Intent.EXTRA_TEXT, bodyMessage);
-                startActivity(Intent.createChooser(email_intent, "Send email..."));
+                startActivity(Intent.createChooser(email_intent, getString(R.string.send_email)));
             }
         });
         AlertDialog alertDialog = builder.create();

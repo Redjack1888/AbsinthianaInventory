@@ -1,7 +1,5 @@
 package com.example.android.absinthianainventory;
 
-//import android.app.LoaderManager;
-
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -23,9 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.absinthianainventory.data.InventoryContract.ItemEntry;
-
-//import android.content.CursorLoader;
-//import android.content.Loader;
 
 /**
  * Displays list of items that were entered and stored in the app.

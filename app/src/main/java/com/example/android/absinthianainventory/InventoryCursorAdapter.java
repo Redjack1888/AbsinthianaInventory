@@ -85,6 +85,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
         quantityTextView.setText(String.valueOf(itemQuantity));
         priceTextView.setText(itemPrice);
 
+        // Update the imageView with the attributes for the current item
         Uri imageUri = Uri.parse(image);
         productPic.setImageURI(imageUri);
 
@@ -110,7 +111,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
             values.put(ItemEntry.COLUMN_ITEM_QUANTITY, newQuantity);
             context.getContentResolver().update(itemUri, values, null, null);
         } else {
-            Toast.makeText(context, "This item is out of Stock.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.item_out, Toast.LENGTH_SHORT).show();
 
         }
     }

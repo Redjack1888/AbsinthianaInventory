@@ -10,11 +10,13 @@
         android:layout_width="88dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false"
         android:layout_centerVertical="true"
         android:background="@android:color/transparent"
         android:focusable="false"
         android:scaleType="center"
-        android:src="@drawable/ic_cart_plus_black_48dp" />
+        android:src="@drawable/ic_cart_plus_black_48dp"
+        android:contentDescription="@string/sale_button" />
 
     <LinearLayout
         android:id="@+id/text_container"
@@ -22,6 +24,7 @@
         android:layout_height="@dimen/list_item_height"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/sale"
         android:layout_toRightOf="@id/image"
@@ -50,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Quantity Available: "
+                android:text="@string/quantity_available"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textColor="@color/primary_text"
                 android:textStyle="italic"
@@ -78,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Price per Item: "
+                android:text="@string/price_per_item"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textColor="@color/primary_text"
                 android:textStyle="italic"
@@ -99,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="€"
+                android:text="@string/current_valute"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/primary_text"
                 android:textStyle="bold"
@@ -115,8 +118,12 @@
         android:layout_height="@dimen/list_item_height"
         android:layout_alignParentBottom="false"
         android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="@dimen/padding_margin_16"
+        android:layout_marginEnd="@dimen/padding_margin_16"
+        android:contentDescription="@string/product_image" />
 
 
 </RelativeLayout>

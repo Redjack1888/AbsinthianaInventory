@@ -26,4 +26,14 @@
 
     <!-- Image Dimensions -->
     <dimen name="image_dimen">75dp</dimen>
+
+    <dimen name="padding_margin_16">16dp</dimen>
+    <dimen name="margin_96">96dp</dimen>
+    <dimen name="padding_margin_8">8dp</dimen>
+    <dimen name="elevation">10dp</dimen>
+    <dimen name="padding_margin_4">4dp</dimen>
+    <dimen name="height_48">48dp</dimen>
+    <dimen name="widtt_114">114dp</dimen>
+    <dimen name="width_226">226dp</dimen>
+    <dimen name="height_120">120dp</dimen>
 </resources>

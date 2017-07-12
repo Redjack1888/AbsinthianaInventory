@@ -15,12 +15,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:elevation="10dp"
-            card_view:cardCornerRadius="16dp"
+            android:layout_marginBottom="@dimen/padding_margin_8"
+            android:layout_marginLeft="@dimen/padding_margin_16"
+            android:layout_marginRight="@dimen/padding_margin_16"
+            android:layout_marginTop="@dimen/padding_margin_16"
+            android:elevation="@dimen/elevation"
+            card_view:cardCornerRadius="@dimen/padding_margin_16"
             tools:targetApi="lollipop">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -46,8 +46,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="@dimen/padding_margin_4"
+                        android:layout_marginStart="@dimen/padding_margin_4"
                         android:layout_weight="2"
                         android:orientation="vertical">
 
@@ -85,9 +85,9 @@
                         <Spinner
                             android:id="@+id/spinner_category"
                             android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
+                            android:layout_height="@dimen/height_48"
+                            android:layout_marginEnd="@dimen/padding_margin_16"
+                            android:layout_marginRight="@dimen/padding_margin_16"
                             android:spinnerMode="dropdown" />
                     </LinearLayout>
                 </LinearLayout>
@@ -108,8 +108,8 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="@dimen/padding_margin_4"
+                        android:layout_marginStart="@dimen/padding_margin_4"
                         android:layout_weight="2">
 
                         <!-- Weight field -->
@@ -133,19 +133,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="@dimen/padding_margin_8"
+                    android:layout_marginTop="@dimen/padding_margin_8"
                     android:orientation="horizontal">
 
                     <!-- Label -->
                     <TextView
                         style="@style/CategoryStyle"
-                        android:text="Quantity"
-                        android:layout_width="114dp" />
+                        android:text="@string/quantity"
+                        android:layout_width="@dimen/widtt_114" />
 
                     <LinearLayout
                         style="@style/EditorFieldStyle"
-                        android:layout_width="226dp"
+                        android:layout_width="@dimen/width_226"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="5">
@@ -192,8 +192,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="@dimen/padding_margin_4"
+                        android:layout_marginStart="@dimen/padding_margin_4"
                         android:layout_weight="2"
                         android:orientation="vertical">
 
@@ -215,7 +215,7 @@
                     <TextView
                         android:id="@+id/image_title"
                         style="@style/CategoryStyle"
-                        android:text="Product Image" />
+                        android:text="@string/product_image" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -225,21 +225,22 @@
                         <ImageView
                             android:id="@+id/image_view_holder"
                             android:layout_width="wrap_content"
-                            android:layout_height="120dp"
+                            android:layout_height="@dimen/height_120"
                             android:adjustViewBounds="true"
-                            android:layout_marginTop="16dp"
-                            android:src="@drawable/blank" />
+                            android:layout_marginTop="@dimen/padding_margin_16"
+                            android:src="@drawable/blank"
+                            android:contentDescription="@string/image_view_holder" />
 
                         <Button
                             android:id="@+id/select_image"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/padding_margin_8"
                             android:background="@color/colorAccent"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
+                            android:paddingLeft="@dimen/padding_margin_16"
+                            android:paddingRight="@dimen/padding_margin_16"
                             android:textColor="@android:color/black"
-                            android:text="Change Image" />
+                            android:text="@string/change_image" />
 
 
                     </LinearLayout>
@@ -251,10 +252,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/padding_margin_16"
+            android:layout_marginLeft="@dimen/padding_margin_16"
+            android:layout_marginRight="@dimen/padding_margin_16"
+            android:layout_marginTop="@dimen/padding_margin_8"
             >
 
             <LinearLayout
@@ -269,31 +270,31 @@
                     android:id="@+id/supplier_name_title"
                     style="@style/CategoryStyle"
                     android:textColor="@android:color/black"
-                    android:text="Product Supplier" />
+                    android:text="@string/product_supplier" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="@dimen/padding_margin_4"
+                    android:layout_marginStart="@dimen/padding_margin_4"
                     android:layout_weight="2"
                     android:orientation="vertical">
 
                     <EditText
                         android:id="@+id/supplier_name_edit"
                         style="@style/EditorFieldStyle"
-                        android:hint="Supplier Name hint"
+                        android:hint="@string/supplier_name_hint"
                         android:inputType="textCapWords"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/padding_margin_8"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/black" />
 
                     <EditText
                         android:id="@+id/supplier_phone_edit"
                         style="@style/EditorFieldStyle"
-                        android:hint="Supplier Phone hint"
+                        android:hint="@string/supplier_phone_hint"
                         android:inputType="phone"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/padding_margin_8"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/black" />
 
@@ -301,9 +302,9 @@
                     <EditText
                         android:id="@+id/supplier_email_edit"
                         style="@style/EditorFieldStyle"
-                        android:hint="Email Address hint"
+                        android:hint="@string/email_address_hint"
                         android:inputType="textEmailAddress"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/padding_margin_8"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/black" />
 

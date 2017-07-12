@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:contentDescription="@string/content_description"
             android:src="@drawable/empty_database"/>
 
         <TextView
@@ -27,7 +28,7 @@
             android:layout_below="@+id/empty_view_image"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-medium"
-            android:paddingTop="16dp"
+            android:paddingTop="@dimen/padding_margin_16"
             android:text="@string/empty_view_title_text"
             android:textAppearance="?android:textAppearanceMedium"
             tools:targetApi="jelly_bean" />
@@ -37,13 +38,13 @@
             android:id="@+id/empty_view_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/padding_margin_16"
             android:text="@string/empty_view_subtitle_text"
             android:layout_below="@+id/empty_title_text"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
-            android:layout_marginLeft="96dp"
-            android:layout_marginRight="96dp"
+            android:layout_marginLeft="@dimen/margin_96"
+            android:layout_marginRight="@dimen/margin_96"
             tools:targetApi="jelly_bean" />
 
     </RelativeLayout>
