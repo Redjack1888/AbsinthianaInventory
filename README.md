@@ -26,7 +26,7 @@ This project is about combining various ideas and skills we’ve been practicing
 <td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1583996355.png" width="125" height="222" /></td>
 <td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1583996377.png" width="125" height="222" /></td>
 <td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1583996604.png" width="125" height="222" /></td>
-<td><img src="https://github.com/Redjack1888/MusicReviewer/blob/master/assets/Screenshot_1583971994.png" width="125" height="222" /></td>  
+<td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1583996610.png" width="125" height="222" /></td>  
 </tr>
 <tr>
 <td><img src="https://github.com/Redjack1888/MusicReviewer/blob/master/assets/Screenshot_1583971997.png" width="125" height="222" /></td>
