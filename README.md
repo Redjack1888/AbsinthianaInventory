@@ -1,4 +1,6 @@
 # AbsinthianaInventory
+![Cover](/assets/smartmockups_k7oew78w.jpg)
+
 Inventory App (Project 10) for "Android Basics by Google Nanodegree Program" - (EU Scholarship) by Udacity
 
 ## Project Overview
