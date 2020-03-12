@@ -29,12 +29,12 @@ This project is about combining various ideas and skills we’ve been practicing
 <td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1583996610.png" width="125" height="222" /></td>  
 </tr>
 <tr>
-<td><img src="https://github.com/Redjack1888/MusicReviewer/blob/master/assets/Screenshot_1583971997.png" width="125" height="222" /></td>
-<td><img src="https://github.com/Redjack1888/MusicReviewer/blob/master/assets/Screenshot_1583972001.png" width="125" height="222" /></td>
-<td><img src="https://github.com/Redjack1888/MusicReviewer/blob/master/assets/Screenshot_1583972009.png" width="125" height="222" /></td>
-<td><img src="https://github.com/Redjack1888/MusicReviewer/blob/master/assets/Screenshot_1583972015.png" width="125" height="222" /></td>
-<td><img src="https://github.com/Redjack1888/MusicReviewer/blob/master/assets/Screenshot_1583972027.png" width="125" height="222" /></td>
-<td><img src="https://github.com/Redjack1888/MusicReviewer/blob/master/assets/Screenshot_1583972053.png" width="125" height="222" /></td>  
+<td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1584036383.png" width="125" height="222" /></td>
+<td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1583996568.png" width="125" height="222" /></td>
+<td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1583996365.png" width="125" height="222" /></td>
+<td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1583996591.png" width="125" height="222" /></td>
+<td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1583996513.png" width="125" height="222" /></td>
+<td><img src="https://github.com/Redjack1888/AbsinthianaInventory/blob/master/assets/Screenshot_1583996521.png" width="125" height="222" /></td>  
 </tr>
 <tr>
 <td><img src="https://github.com/Redjack1888/MusicReviewer/blob/master/assets/Screenshot_1583972067.png" width="125" height="222" /></td>
